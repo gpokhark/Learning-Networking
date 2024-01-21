@@ -157,6 +157,7 @@ To ensure that `wpa_supplicant` uses the specified `wpa_supplicant.conf `file at
     ```bash
     cd /etc/systemd/system
     sudo cp /lib/systemd/system/wpa_supplicant.service .
+    sudo chmod 664 wpa_supplicant.service
     ExecStart=/sbin/wpa_supplicant -u -s -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlan0
     ```
     For systems using other init systems (SysV init, Upstart), check the corresponding startup scripts.
