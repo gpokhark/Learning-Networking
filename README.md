@@ -109,6 +109,54 @@
 - Description: `NetworkManager` is a service that manages network connections on Linux systems. It provides a high-level interface for configuration and automatic detection of network devices.
 - Purpose: Connection Management: `NetworkManager` handles the configuration of wired, wireless, mobile broadband, and other network connections.
 Network Profiles: It stores network profiles and automatically connects to known networks.
+- Important `nmcli` commands -
+    - Show all the devices 
+        ```bash
+        sudo nmcli device show
+        ```
+    - List all the wifi in the vicinity
+        ```bash
+        sudo nmcli device wifi list
+        ```
+    - List all the wifi connections
+        ```bash
+        sudo nmcli connection show
+        ```
+    - Connecting to a wifi
+        ```bash
+        sudo nmcli device wifi connect "NetGear" password "password"
+        ```
+    - List all the properties of a connection
+        ```bash
+        sudo nmcli show NetGear
+        ```
+        Also visible in following location
+        ```bash
+        cd /etc/NetworkManager/system-connection
+        sudo cat NetGear.nmconnection
+        ```
+    - Modify property of a connection
+        ```bash
+        sudo nmcli connection modify NetGear connection.autoconnect-priority 10
+        sudo nmcli connection modify NetGear connection.autoconnect yes
+        ```
+        Check the updated property in the file mentioned in the previous point.
+    - Modify and set static ipv4
+        ```bash
+        nmcli connection modify "YourConnectionName" \
+        ipv4.method manual \
+        ipv4.address "192.168.1.2/24" \
+        ipv4.gateway "192.168.1.1" \
+        ipv4.dns "8.8.8.8,8.8.4.4"
+        ```
+        To get the dns server automatically
+        ```bash
+        nmcli connection modify "YourConnectionName" \
+        ipv4.method manual \
+        ipv4.address "192.168.1.2/24" \
+        ipv4.gateway "192.168.1.1" \
+        ipv4..ignore-auto-dns no
+        ```
 
 ### `dnsmasq`
 - Description: `dnsmasq` is a lightweight DNS and DHCP server. It can provide DNS forwarding, caching, and DHCP services.
