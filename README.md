@@ -27,12 +27,34 @@
     - `sudo airodump-ng wlan1` - monitor/ capture mode
     - `sudo aireplay-ng -9 wlan1`
     - `sudo wash -i wlan1`
+    - `sudo nmcli device wifi rescan`
+    - `sudo nmcli device wifi list`
 - Connect to a wifi
     - `sudo nmcli device wifi connect "name1" password "hello"` - using default interface `wlan0`
     - `sudo nmcli device wifi connect "name1" password "hello" ifname wlan1` - using interface `wlan1`
     - `sudo nmcli device wifi connect "gaurav hotspot"` - If already connected in the past using password
     - `sudo nmtui` - GUI
     - `sudo raspi-config`
+- Creating the connection profile explicitly with the right security settings, then bring it up
+    ```bash
+    sudo nmcli connection add type wifi ifname wlan0 con-name "SSID" ssid "SSID"
+    sudo nmcli connection modify "SSID" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "pass" connection.autoconnect yes
+    sudo nmcli connection up "SSID"
+    ```
+
+- If the SSID is hidden
+    ```bash
+    sudo nmcli connection add type wifi ifname wlan0 con-name "SSID" ssid "SSID"
+    sudo nmcli connection modify "SSID" 802-11-wireless.hidden yes wifi-sec.key-mgmt wpa-psk wifi-sec.psk "pass" connection.autoconnect yes
+    sudo nmcli connection up "SSID"
+    ```
+- Show all the properties of any connection 
+    ```bash
+    sudo nmcli connection show "SSID"
+    sudo nmcli connection show "SSID" | grep -E *auto*
+    ```
+- `SSID.nmconnection` files are stored at location - `cd /etc/NetworkManager/system-connections`
+
 - Set `wlan1` to monitor mode
     - `iw`
         ```bash
