@@ -55,6 +55,18 @@
     ```
 - `SSID.nmconnection` files are stored at location - `cd /etc/NetworkManager/system-connections`
 
+- If you copy paste `*.nmconnection` files directly then do following steps - 
+    ```bash
+    sudo chown root:root /etc/NetworkManager/system-connections/*.nmconnection
+    sudo chmod 600 /etc/NetworkManager/system-connections/*.nmconnection
+    sudo nmcli connection reload
+    sudo systemctl restart NetworkManager
+    ```
+    - If you want validation:
+        ```bash
+        nmcli connection import type wifi file file.nmconnection
+        ```
+
 - Set `wlan1` to monitor mode
     - `iw`
         ```bash
